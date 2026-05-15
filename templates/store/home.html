@@ -1,0 +1,74 @@
+{% extends 'store/base.html' %} {% block content %}
+
+<!-- Category Filter -->
+<div class="mb-3 d-flex flex-wrap gap-2">
+  <a
+    href="/"
+    class="btn-outline-trendzy {% if not request.GET.category %}active{% endif %}"
+    >All</a
+  >
+  {% for cat in categories %}
+  <a
+    href="/?category={{ cat.id }}"
+    class="btn-outline-trendzy"
+    style="{% if request.GET.category == cat.id %}background:#1C5253;color:#F3FFC6;{% endif %}"
+  >
+    {{ cat.name }}
+  </a>
+  {% endfor %}
+</div>
+
+<!-- Products Grid -->
+<div class="row row-cols-2 row-cols-md-4 g-3">
+  {% for product in products %}
+  <div class="col">
+    <div class="card h-100 product-card border-0">
+      {% if product.image %}
+      <img
+        src="{{ product.image.url }}"
+        class="card-img-top p-2"
+        style="height: 160px; object-fit: contain"
+      />
+      {% else %}
+      <div
+        class="d-flex align-items-center justify-content-center"
+        style="height: 160px; background: #eaffd6; font-size: 3rem"
+      >
+        📦
+      </div>
+      {% endif %}
+
+      <div class="card-body p-2">
+        <h6 class="card-title mb-1" style="color: #1c5253">
+          {{ product.name }}
+        </h6>
+        <div class="d-flex align-items-center flex-wrap gap-1">
+          <span class="price">₹{{ product.price }}</span>
+          {% if product.old_price %}
+          <small class="text-muted text-decoration-line-through">
+            ₹{{ product.old_price }}
+          </small>
+          <span class="badge badge-off"
+            >{{ product.discount_percent }}% off</span
+          >
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="card-footer bg-white border-0 p-2">
+        <a
+          href="{% url 'product_detail' product.pk %}"
+          class="btn btn-trendzy w-100 btn-sm"
+          >View Details</a
+        >
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <p class="text-center text-muted py-5">No products found 😢</p>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

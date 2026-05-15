@@ -1,0 +1,26 @@
+{% extends 'store/base.html' %} {% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header" style="background: #1c5253; color: #f3ffc6">
+        <h5 class="mb-0">📦 Confirm Your Order</h5>
+      </div>
+      <div class="card-body">
+        <p class="fw-bold">
+          Order Total:
+          <span class="price fs-5">₹{{ cart.total }}</span>
+        </p>
+        <hr />
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <button class="btn btn-trendzy w-100 fw-bold mt-2">
+            ✅ Place Order
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

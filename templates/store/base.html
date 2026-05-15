@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trendzy</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: linear-gradient(to right, #f3ffc6, #ddf48d);
+      }
+      .navbar {
+        background: #1c5253 !important;
+        height: 90px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      .brand {
+        color: #f3ffc6 !important;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+      }
+      .nav-link {
+        color: #f3ffc6 !important;
+      }
+      .btn-trendzy {
+        background: #f3ffc6;
+        color: #1c5253;
+        font-weight: 500;
+        border: none;
+      }
+      .btn-trendzy:hover {
+        background: #e0f0a0;
+        color: #1c5253;
+      }
+      .card {
+        border: 0.5px solid #b8d89a;
+        border-radius: 8px;
+        background: white;
+      }
+      .card:hover {
+        transform: translateY(-4px);
+        transition: 0.2s;
+        box-shadow: 0 6px 16px rgba(28, 82, 83, 0.12);
+      }
+      .badge-off {
+        background: #1c5253;
+        color: #f3ffc6;
+        font-size: 10px;
+      }
+      .price {
+        color: #1c5253;
+        font-weight: 500;
+      }
+      .btn-outline-trendzy {
+        border: 1px solid #1c5253;
+        color: #1c5253;
+        background: white;
+        border-radius: 5px;
+        padding: 4px 14px;
+        font-size: 13px;
+      }
+      .btn-outline-trendzy:hover {
+        background: #1c5253;
+        color: #f3ffc6;
+      }
+      footer {
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: normal;
+        bottom: 0;
+        width: 100%;
+        background: #1c5253;
+        color: #f3ffc6;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg shadow-sm">
+      <div class="container">
+        <a class="navbar-brand brand fw-bold" href="{% url 'home' %}"
+          >✦ Trendzy</a
+        >
+
+        <!-- Search -->
+        <form class="d-flex mx-auto w-50" action="/" method="get">
+          <input
+            class="form-control me-2"
+            name="q"
+            placeholder="Search products..."
+            value="{{ query }}"
+          />
+          <button class="btn btn-trendzy px-3">Search</button>
+        </form>
+
+        <!-- Links -->
+        <ul class="navbar-nav ms-auto">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart' %}">🛒 Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'my_orders' %}">📦 Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- FLASH MESSAGES -->
+    <div class="container mt-2">
+      {% for msg in messages %}
+      <div class="alert alert-{{ msg.tags }} alert-dismissible fade show py-2">
+        {{ msg }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container my-4">{% block content %}{% endblock %}</div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 mt-5">
+      <small>© 2025 Trendzy — Built with Django</small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
